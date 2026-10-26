@@ -11,3 +11,8 @@ $RECYCLE.BIN/
 # Editor
 .vscode/
 .idea/
+
+# Scratch & Extraction Dumps
+scratch/
+extracted_imgs.txt
+extracted_urls.txt

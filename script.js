@@ -121,12 +121,41 @@ document.addEventListener('DOMContentLoaded', () => {
       let hasMoved = false;
       let currentShift = 0;
 
-      function getStep() {
-        const smallCard = track.querySelector('.precision-slide-card:not(.is-active)');
+      function getPrecisionCardDimensions() {
+        const winW = window.innerWidth;
         const trackStyle = window.getComputedStyle(track);
         const gap = parseFloat(trackStyle.gap) || 16;
-        const cardW = smallCard ? smallCard.offsetWidth : 225;
-        return cardW + gap;
+        const activeCard = track.querySelector('.precision-slide-card.is-active') || cards[currentIndex] || cards[0];
+        const smallCard = track.querySelector('.precision-slide-card:not(.is-active)') || cards[0];
+        const activeW = activeCard && activeCard.offsetWidth > 0 ? activeCard.offsetWidth : (winW <= 640 ? 250 : (winW <= 850 ? 270 : (winW <= 1150 ? 290 : 310)));
+        const smallW = smallCard && smallCard.offsetWidth > 0 ? smallCard.offsetWidth : (winW <= 640 ? 195 : (winW <= 850 ? 210 : (winW <= 1150 ? 220 : 225)));
+        return { smallW, activeW, gap };
+      }
+
+      function getShiftForIndex(targetIdx) {
+        const viewportW = sliderViewport.clientWidth;
+        const { smallW, activeW, gap } = getPrecisionCardDimensions();
+        
+        // Active card has targetIdx small cards before it
+        const activeCardLeft = targetIdx * (smallW + gap);
+        const activeCardCenter = activeCardLeft + (activeW / 2);
+        const viewportCenter = viewportW / 2;
+        
+        let targetShift = viewportCenter - activeCardCenter;
+        
+        const totalTrackW = (totalCards - 1) * smallW + activeW + (totalCards - 1) * gap;
+        const minShift = Math.min(0, viewportW - totalTrackW);
+        
+        if (window.innerWidth > 640) {
+          // On desktop and tablet, clamp within track bounds so no empty space appears at edges
+          targetShift = Math.min(0, Math.max(minShift, targetShift));
+        } else {
+          // On mobile, allow centering even for first and last cards with safe bounds
+          const maxShift = Math.max(0, (viewportW - activeW) / 2);
+          const allowMin = minShift - Math.max(0, (viewportW - activeW) / 2);
+          targetShift = Math.min(maxShift, Math.max(allowMin, targetShift));
+        }
+        return targetShift;
       }
 
       function updateActiveCard() {
@@ -155,8 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       function setTrackTransform(index, withTransition = true) {
-        const step = getStep();
-        const shiftX = -(index - 1) * step;
+        const shiftX = getShiftForIndex(index);
         track.style.transition = withTransition ? 'transform 0.48s cubic-bezier(0.22, 1, 0.36, 1)' : 'none';
         track.style.transform = `translateX(${shiftX}px)`;
         currentShift = shiftX;
@@ -213,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isDragging = true;
         hasMoved = false;
         startX = e.clientX;
-        currentShift = -(currentIndex - 1) * getStep();
+        currentShift = getShiftForIndex(currentIndex);
         sliderViewport.style.cursor = 'grabbing';
       });
 
@@ -284,18 +312,42 @@ document.addEventListener('DOMContentLoaded', () => {
     let testiShift = 0;
     let testiHasMoved = false;
 
+    // Helper: calculate exact card width and gap dynamically for responsive viewports
+    function updateTestiDimensions() {
+      if (!testiViewport) return;
+      const viewportW = testiViewport.clientWidth;
+      if (viewportW <= 0) return;
+      const winW = window.innerWidth;
+      let cardsPerRow = 3;
+      let gap = 24;
+      if (viewportW <= 640 || winW <= 640) {
+        cardsPerRow = 1;
+        gap = 16;
+      } else if (viewportW <= 1100 || winW <= 1150) {
+        cardsPerRow = 2;
+        gap = 20;
+      } else {
+        cardsPerRow = 3;
+        gap = 24;
+      }
+      const cardW = Math.floor((viewportW - (cardsPerRow - 1) * gap) / cardsPerRow);
+      testiViewport.style.setProperty('--testi-card-width', `${cardW}px`);
+      testiViewport.style.setProperty('--testi-slider-gap', `${gap}px`);
+    }
+
     function getTestiStep() {
       const card = testiCards[0];
       const trackStyle = window.getComputedStyle(testiTrack);
-      const gap = parseFloat(trackStyle.gap) || 24;
-      const cardW = card ? card.offsetWidth : 410;
+      const gap = parseFloat(trackStyle.gap) || 20;
+      const winW = window.innerWidth;
+      const cardW = card && card.offsetWidth > 0 ? card.offsetWidth : ((testiViewport.clientWidth <= 640 || winW <= 640) ? testiViewport.clientWidth : ((testiViewport.clientWidth <= 1100 || winW <= 1150) ? (testiViewport.clientWidth - 20) / 2 : 410));
       return cardW + gap;
     }
 
     function getMaxTestiIndex() {
       const step = getTestiStep();
       const viewportW = testiViewport.clientWidth;
-      const totalTrackW = (totalTestis * step) - (parseFloat(window.getComputedStyle(testiTrack).gap) || 24);
+      const totalTrackW = (totalTestis * step) - (parseFloat(window.getComputedStyle(testiTrack).gap) || 20);
       const maxScroll = Math.max(0, totalTrackW - viewportW);
       return Math.max(0, Math.ceil(maxScroll / step));
     }
@@ -333,7 +385,9 @@ document.addEventListener('DOMContentLoaded', () => {
       setTestiTransform(testiIndex, true);
     }
 
+    updateTestiDimensions();
     updateTestiControls();
+    setTestiTransform(testiIndex, false);
 
     if (testiPrevBtn) {
       testiPrevBtn.addEventListener('click', () => {
@@ -387,6 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('resize', () => {
+      updateTestiDimensions();
       updateTestiControls();
       setTestiTransform(testiIndex, false);
     });
@@ -414,12 +469,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!prodViewport) return;
       const viewportW = prodViewport.clientWidth;
       if (viewportW <= 0) return;
+      const winW = window.innerWidth;
       let cardsPerRow = 3;
       let gap = 24;
-      if (viewportW <= 640) {
+      if (viewportW <= 640 || winW <= 640) {
         cardsPerRow = 1;
         gap = 16;
-      } else if (viewportW <= 980) {
+      } else if (viewportW <= 1100 || winW <= 1150) {
         cardsPerRow = 2;
         gap = 20;
       } else {
@@ -598,9 +654,17 @@ document.addEventListener('DOMContentLoaded', () => {
       setProdOffset(currentProdOffset, false);
     });
 
-    // Initialize dimensions and arrows on load
+    // Initialize dimensions and arrows on load and after reflow
     updateCardDimensions();
     updateProdArrows();
+    requestAnimationFrame(() => {
+      updateCardDimensions();
+      updateProdArrows();
+    });
+    window.addEventListener('load', () => {
+      updateCardDimensions();
+      updateProdArrows();
+    });
   }
 
   // ==========================================

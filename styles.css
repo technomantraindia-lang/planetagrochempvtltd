@@ -458,6 +458,14 @@ a {
   flex-direction: column;
   gap: 48px;
   background-color: #ffffff;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.main-content-canvas > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .display-title {
@@ -832,54 +840,6 @@ a {
   flex-shrink: 0;
 }
 
-/* Responsive adjustments for About Us Section */
-@media (max-width: 1080px) {
-  .about-us-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .about-image-card {
-    aspect-ratio: 16 / 10;
-  }
-}
-
-@media (max-width: 640px) {
-  .about-pillars-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .about-float-badge {
-    padding: 8px 12px;
-  }
-  .float-badge-top {
-    top: 14px;
-    right: 14px;
-  }
-  .float-badge-bottom {
-    bottom: 50px;
-    left: 14px;
-  }
-  .float-badge-stat {
-    font-size: 0.95rem;
-  }
-  .float-badge-label {
-    font-size: 0.68rem;
-  }
-  .about-image-caption {
-    font-size: 0.74rem;
-    padding: 10px 14px;
-  }
-  .about-actions-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .about-cta-btn {
-    justify-content: center;
-  }
-  .about-heritage-card {
-    justify-content: center;
-  }
-}
 
 /* =========================================================
    2. SECTION 2: FAST PRECISION CARGO DELIVERY (WHITE CANVAS)
@@ -1498,21 +1458,6 @@ a {
   line-height: 1.25;
 }
 
-@media (max-width: 1100px) {
-  .why-choose-features-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-top: 36px;
-  }
-}
-
-@media (max-width: 640px) {
-  .why-choose-features-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 28px;
-  }
-}
 
 .nextgen-actions {
   display: flex;
@@ -2073,10 +2018,11 @@ a {
   margin-top: auto;
 }
 
-.product-slide-card:hover .product-slide-cta {
-  background: #041f38;
-  color: #ffffff;
-  box-shadow: 0 6px 20px rgba(4, 31, 56, 0.22);
+.product-slide-card:hover .product-slide-cta,
+.product-slide-cta:hover {
+  background: var(--accent-yellow-hover, #eab006);
+  color: #041f38;
+  box-shadow: 0 6px 20px rgba(253, 190, 52, 0.45);
   transform: translateY(-2px);
 }
 
@@ -2765,6 +2711,8 @@ a {
   touch-action: pan-y;
   padding: 8px 0 20px 0;
   outline: none;
+  container-type: inline-size;
+  container-name: testislider;
 }
 
 .testimonials-slider-viewport:active {
@@ -2773,7 +2721,7 @@ a {
 
 .testimonials-slider-track {
   display: flex;
-  gap: 24px;
+  gap: var(--testi-slider-gap, 24px);
   align-items: stretch;
   width: max-content;
   will-change: transform;
@@ -2784,15 +2732,17 @@ a {
 .testi-card-box {
   background: #ffffff;
   border-radius: 22px;
-  padding: 30px 28px 26px;
+  padding: 28px 24px 24px;
   box-shadow: 0 10px 28px rgba(8, 30, 56, 0.06);
-  border: 1px solid rgba(8, 30, 56, 0.04);
+  border: 1px solid rgba(8, 30, 56, 0.05);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 410px;
-  flex: 0 0 410px;
+  width: var(--testi-card-width, 410px);
+  flex: 0 0 var(--testi-card-width, 410px);
   min-height: 235px;
+  min-width: 0;
+  box-sizing: border-box;
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
 }
 
@@ -2830,11 +2780,11 @@ a {
 }
 
 .testi-body-quote {
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-size: clamp(0.96rem, 1.2vw, 1.12rem);
+  font-weight: 600;
   color: #041f38;
-  line-height: 1.45;
-  margin: 0 0 28px 0;
+  line-height: 1.5;
+  margin: 0 0 22px 0;
   letter-spacing: -0.01em;
 }
 
@@ -2846,13 +2796,15 @@ a {
   padding-top: 16px;
   border-top: 1px solid #f1f5f9;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .testi-author-info {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-shrink: 0;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .testi-avatar-img {
@@ -2865,27 +2817,34 @@ a {
 }
 
 .testi-author-name {
-  font-size: 0.96rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #041f38;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .testi-author-role {
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #64748b;
-  line-height: 1.2;
+  line-height: 1.25;
   margin-top: 2px;
 }
 
 .testi-badge-tag {
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: #0369a1;
-  text-align: right;
+  color: #0284c7;
+  background: rgba(2, 132, 199, 0.08);
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  border-radius: 8px;
+  padding: 5px 10px;
   line-height: 1.35;
-  max-width: 150px;
+  text-align: right;
+  flex-shrink: 0;
+  white-space: normal;
+  max-width: 170px;
+  box-sizing: border-box;
 }
 
 /* =========================================================
@@ -3145,252 +3104,313 @@ a {
 }
 
 /* =========================================================
-   RESPONSIVENESS
+   RESPONSIVENESS SUITE — PLANET AGRO CHEM PVT. LTD.
+   Flawlessly tuned for:
+   1. Small Laptops & Landscape Tablets (1024px / 1150px - 851px)
+   2. Portrait Tablets & iPads (768px / 850px - 641px)
+   3. Mobile Phones (520px / 640px - 381px)
+   4. Ultra-Compact Devices (<= 380px)
    ========================================================= */
-@media (max-width: 1200px) {
-  .nav-links {
-    gap: 2px;
-    padding: 4px 6px;
-  }
-  .nav-link-item {
-    font-size: 0.82rem;
-    padding: 7px 12px;
-    gap: 6px;
-  }
-  .btn-yellow {
-    padding: 10px 18px;
-    font-size: 0.85rem;
-  }
-  .hero-giant-title {
-    font-size: 4.2rem;
-  }
-  .cargo-delivery-grid {
-    grid-template-columns: 1fr;
-  }
-  .stats-3col-grid {
-    grid-template-columns: 1fr;
-  }
-  .nextgen-grid {
-    grid-template-columns: 1fr;
-    gap: 44px;
-  }
-  .nextgen-visual-wrap {
-    max-width: 540px;
-    margin: 0 auto;
-  }
-  .precision-section-layout {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-  .precision-right-col {
-    padding-top: 10px;
-    justify-content: flex-start;
-  }
-  .precision-truck-anchor {
-    display: none;
-  }
-  .precision-top-info-row {
-    justify-content: space-between;
-  }
-  .testimonials-grid-3 {
-    grid-template-columns: 1fr;
-  }
-  .footer-brand-huge {
-    font-size: 3.8rem;
-  }
+
+/* ---------------------------------------------------------
+   GLOBAL COMMODITY CATALOG RESPONSIVE FIXES
+   (Applied globally across all responsive viewports)
+   --------------------------------------------------------- */
+.product-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 4px 0 10px 0;
 }
 
-@media (max-width: 960px) {
-  .nav-links {
-    display: none;
-  }
-  .nav-mobile-toggle {
-    display: flex;
-  }
-  .mobile-nav-drawer {
-    display: block;
-  }
+.product-filter-bar::-webkit-scrollbar {
+  display: none;
 }
 
-@media (max-width: 850px) {
+.product-filter-tabs {
+  display: inline-flex !important;
+  gap: 6px;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  align-items: center;
+  padding: 6px 8px;
+  background: #ffffff;
+  border-radius: 9999px;
+  border: 1px solid rgba(4, 30, 56, 0.1);
+  box-shadow: 0 4px 16px rgba(4, 31, 56, 0.04);
+}
+
+.filter-tab-btn {
+  white-space: nowrap !important;
+  flex-shrink: 0;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+}
+
+.products-slider-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+  padding: 10px 4px 24px 4px;
+  container-type: inline-size;
+  container-name: prodslider;
+}
+
+.products-slider-track {
+  display: flex;
+  gap: var(--prod-slider-gap, 24px);
+  align-items: stretch;
+  width: max-content;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.product-slide-card {
+  width: var(--prod-card-width, calc((100cqw - 48px) / 3));
+  flex: 0 0 var(--prod-card-width, calc((100cqw - 48px) / 3));
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.product-slide-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10.5;
+  max-height: 220px;
+  background: #f1f5f9;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   1. SMALL LAPTOPS & LANDSCAPE TABLETS (1024px / 1150px - 851px)
+   --------------------------------------------------------- */
+@media (min-width: 851px) and (max-width: 1150px) {
+  /* Hero Section */
   .hero-fullscreen-wrapper {
-    padding: 8px 10px;
+    height: auto;
     min-height: 580px;
+    padding: 16px 20px 24px;
   }
   .hero-screen-card {
     border-width: 8px;
-    border-radius: 22px;
+    border-radius: 24px;
+    min-height: 560px;
   }
   .hero-inner-container {
-    padding: 18px 16px 28px;
-  }
-  .hero-navbar {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-  }
-  .hero-giant-title {
-    font-size: 2.8rem;
-  }
-  .main-content-canvas {
-    padding: 16px;
-    gap: 20px;
-  }
-  .white-section-card, .blue-section-card, .products-showcase-section, .precision-handling-card, .testimonials-section-card, .footer-wrap-card {
-    padding: 30px 20px;
-  }
-  .nextgen-title {
-    font-size: 2.3rem;
-  }
-  .nextgen-truck-card {
-    width: 80%;
-  }
-  .collab-badge-card {
-    width: 150px;
-    padding: 12px 10px 14px;
-  }
-  .collab-tracker-img-wrap {
-    width: 66px;
-    height: 66px;
-  }
-  .collab-tagline {
-    font-size: 0.82rem;
-  }
-  .precision-handling-card {
-    padding: 32px 18px 24px;
-  }
-  .precision-right-col {
-    margin-right: 0;
-  }
-  .precision-title {
-    font-size: 2.2rem;
-  }
-  .precision-top-info-row {
-    flex-wrap: wrap;
-    gap: 16px;
-    justify-content: flex-start;
-    padding-right: 0;
-  }
-  .precision-sub-desc {
-    text-align: left;
-  }
-  .testimonials-section-card {
-    padding: 32px 20px;
-  }
-  .testi-card-box {
-    width: 340px;
-    flex: 0 0 340px;
-    padding: 24px 20px 20px;
-  }
-  .testi-body-quote {
-    font-size: 1.05rem;
-  }
-  .newsletter-box {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 22px;
-    padding: 28px 24px;
-  }
-  .newsletter-inputs-row {
-    width: 100%;
-    max-width: 100%;
-    gap: 12px;
-  }
-  .footer-main-row {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    text-align: left;
-  }
-  .footer-nav-list {
-    text-align: left;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 16px 28px;
-  }
-}
-
-@media (max-width: 540px) {
-  .nextgen-visual-wrap {
-    max-width: 100%;
-  }
-  .nextgen-truck-card {
-    width: 76%;
-    aspect-ratio: 1 / 1;
-  }
-  .pinpoint-title,
-  .pinpoint-sub {
-    font-size: 1rem;
-  }
-  .collab-badge-card {
-    width: 130px;
-    padding: 10px 8px 12px;
-    border-radius: 14px;
-  }
-  .collab-badge-label {
-    font-size: 0.72rem;
-  }
-  .collab-tracker-img-wrap {
-    width: 52px;
-    height: 52px;
-  }
-  .collab-tagline {
-    font-size: 0.74rem;
-  }
-  .nextgen-title {
-    font-size: 1.85rem;
-  }
-  .nextgen-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-  .precision-title {
-    font-size: 1.75rem;
-  }
-  .precision-title span {
-    white-space: normal;
-  }
-  .precision-slide-card {
-    width: 215px;
-    flex: 0 0 215px;
-    margin-top: 26px;
-  }
-  .precision-slide-card.is-active {
-    width: 270px;
-    flex: 0 0 270px;
-    margin-top: 0;
-  }
-  .testimonials-title {
-    font-size: 2rem;
-  }
-  .testi-card-box {
-    width: 285px;
-    flex: 0 0 285px;
-    padding: 20px 18px 18px;
-  }
-  .testi-body-quote {
-    font-size: 0.98rem;
+    padding: 18px 22px 28px;
   }
   .brand-logo-frame {
-    height: 48px;
+    height: 46px;
     padding: 4px 14px;
   }
   .brand-logo-img {
-    height: 38px;
-    max-width: 155px;
+    height: 34px;
+    max-width: 145px;
   }
-  .footer-brand-wrap {
-    flex-direction: column;
-    align-items: flex-start;
+
+  /* Compact Navbar links for 1024px */
+  .nav-links {
+    display: flex;
+    gap: 2px;
+    padding: 4px 6px;
+    flex-shrink: 1;
+  }
+  .nav-link-item {
+    font-size: 0.78rem;
+    padding: 5px 8px;
+    gap: 0;
+    white-space: nowrap;
+  }
+  .nav-link-item svg {
+    display: none;
+  }
+  .nav-cta-btn {
+    padding: 8px 13px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nav-mobile-toggle {
+    display: none;
+  }
+
+  .hero-giant-title {
+    font-size: clamp(2.3rem, 4.2vw, 3.4rem);
+    line-height: 0.98;
+  }
+  .hero-giant-title span {
+    white-space: normal;
+  }
+  .hero-subtitle {
+    font-size: 0.95rem;
+    max-width: 480px;
+    line-height: 1.48;
+  }
+
+  /* Main Canvas Container */
+  .main-content-canvas {
+    max-width: 100%;
+    padding: 28px 20px 50px;
+    gap: 28px;
+  }
+
+  /* Section Cards Standard Padding */
+  .white-section-card,
+  .blue-section-card,
+  .products-showcase-section,
+  .precision-handling-card,
+  .testimonials-section-card,
+  .footer-wrap-card {
+    padding: 32px 24px;
+    border-radius: 22px;
+  }
+
+  /* About Us Section: Elegant 2-Column Layout on 1024px */
+  .about-us-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  .about-main-title {
+    font-size: clamp(1.85rem, 3.2vw, 2.3rem);
+  }
+  .about-image-card {
+    aspect-ratio: 16 / 11;
+    max-height: 400px;
+  }
+  .about-float-badge {
+    padding: 8px 12px;
+    gap: 8px;
+    border-radius: 12px;
+  }
+  .float-badge-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+  .float-badge-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+  .float-badge-stat {
+    font-size: 0.80rem;
+  }
+  .float-badge-label {
+    font-size: 0.68rem;
+  }
+  .float-badge-top {
+    top: 14px;
+    right: 14px;
+  }
+  .float-badge-bottom {
+    bottom: 44px;
+    left: 14px;
+  }
+  .about-pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-}
 
-/* Products Showcase Slider Responsive Breakpoints */
-@media (max-width: 980px) {
+  /* Services / Freight Cards: 2-Column Side-by-Side on 1024px */
+  .cargo-delivery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: stretch;
+  }
+  .cargo-left-info {
+    grid-column: 1 / -1;
+    padding-right: 0;
+    margin-bottom: 8px;
+  }
+  .cargo-left-desc {
+    max-width: 100%;
+  }
+  .cargo-left-title {
+    font-size: 2.2rem;
+  }
+  .cargo-left-title span {
+    white-space: normal;
+  }
+  .air-freight-card,
+  .ocean-freight-card {
+    min-height: 300px;
+  }
+  .commodity-top-title {
+    font-size: 1.55rem;
+  }
+
+  /* Stats Banner Card: Headline on top, 2 boxes side-by-side */
+  .stats-banner-card {
+    padding: 28px 24px;
+    border-radius: 20px;
+  }
+  .stats-3col-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: stretch;
+  }
+  .center-faith-box {
+    grid-column: 1 / -1;
+    order: -1;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .faith-title {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    line-height: 1.12;
+  }
+
+  /* Why Choose Us Section: 2 Columns on 1024px */
+  .nextgen-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  .nextgen-visual-wrap {
+    max-width: 100%;
+  }
+  .collab-badge-card {
+    width: 155px;
+    padding: 12px 10px 14px;
+    border-radius: 14px;
+  }
+  .collab-tagline {
+    font-size: 0.75rem;
+  }
+  .nextgen-title {
+    font-size: clamp(1.8rem, 3vw, 2.2rem);
+  }
+  .nextgen-actions {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .nextgen-actions .btn-yellow {
+    font-size: 0.86rem;
+    padding: 10px 18px;
+  }
+  .why-choose-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  /* Products Showcase Section on 1024px */
   .products-showcase-section {
-    padding: 44px 32px;
+    padding: 32px 24px;
+  }
+  .products-showcase-title {
+    font-size: 2.1rem;
   }
   .products-slider-track {
     gap: var(--prod-slider-gap, 20px);
@@ -3399,77 +3419,952 @@ a {
     width: var(--prod-card-width, calc((100cqw - 20px) / 2));
     flex: 0 0 var(--prod-card-width, calc((100cqw - 20px) / 2));
   }
+
+  /* Precision Handling Section: Full Width on 1024px */
+  .precision-section-layout {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .precision-truck-anchor {
+    display: none;
+  }
+  .precision-right-col {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .precision-top-info-row {
+    margin-bottom: 14px;
+  }
+  .precision-title {
+    font-size: clamp(1.9rem, 3.2vw, 2.2rem);
+  }
+  .precision-title span {
+    white-space: normal;
+  }
+  .precision-desc {
+    max-width: 100%;
+  }
+  .precision-slide-card {
+    width: 220px;
+    flex: 0 0 220px;
+    margin-top: 26px;
+    padding: 18px 16px;
+  }
+  .precision-slide-card.is-active {
+    width: 290px;
+    flex: 0 0 290px;
+    margin-top: 0;
+    padding: 20px 18px;
+  }
+  .precision-slide-card .slide-card-photo-box {
+    height: 140px;
+  }
+  .precision-slide-card.is-active .slide-card-photo-box {
+    height: 150px;
+  }
+
+  /* Testimonials Section */
+  .testimonials-section-card {
+    padding: 32px 24px;
+  }
+  .testimonials-title {
+    font-size: clamp(1.85rem, 3.2vw, 2.3rem);
+  }
+  .testimonials-slider-track {
+    gap: var(--testi-slider-gap, 20px);
+  }
+  .testi-card-box {
+    width: var(--testi-card-width, calc((100cqw - 20px) / 2));
+    flex: 0 0 var(--testi-card-width, calc((100cqw - 20px) / 2));
+    padding: 24px 20px;
+  }
+  .testi-badge-tag {
+    max-width: 170px;
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+
+  /* Footer Card: 3 Columns fitting cleanly on 1024px */
+  .footer-wrap-card {
+    padding: 32px 24px 28px;
+  }
+  .footer-main-row {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 0.95fr;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .footer-brand-huge {
+    font-size: 2.8rem;
+  }
+  .footer-nav-list a {
+    font-size: 1.25rem;
+  }
 }
 
-@media (max-width: 640px) {
+/* ---------------------------------------------------------
+   2. TABLETS PORTRAIT & IPADS (768px / 850px - 641px)
+   --------------------------------------------------------- */
+@media (max-width: 850px) {
+  /* Hero Section */
+  .hero-fullscreen-wrapper {
+    padding: 10px 12px 18px;
+    min-height: 560px;
+    height: auto;
+  }
+  .hero-screen-card {
+    border-width: 8px;
+    border-radius: 22px;
+    min-height: 540px;
+  }
+  .hero-inner-container {
+    padding: 16px 14px 26px;
+  }
+  .brand-logo-frame {
+    height: 48px;
+    padding: 4px 16px;
+  }
+  .brand-logo-img {
+    height: 38px;
+    max-width: 155px;
+  }
+
+  /* Mobile Drawer Toggle on <= 850px */
+  .nav-links {
+    display: none !important;
+  }
+  .nav-mobile-toggle {
+    display: flex !important;
+  }
+  .mobile-nav-drawer {
+    display: block;
+  }
+  .nav-cta-btn {
+    display: none !important;
+  }
+
+  .hero-giant-title {
+    font-size: clamp(2rem, 5.2vw, 2.75rem);
+    line-height: 1.02;
+  }
+  .hero-giant-title span {
+    white-space: normal;
+  }
+  .hero-subtitle {
+    font-size: 0.90rem;
+    max-width: 420px;
+    line-height: 1.5;
+  }
+
+  /* Main Canvas Container */
+  .main-content-canvas {
+    padding: 18px 12px 50px;
+    gap: 22px;
+  }
+
+  /* Section Cards */
+  .white-section-card,
+  .blue-section-card,
+  .products-showcase-section,
+  .precision-handling-card,
+  .testimonials-section-card,
+  .footer-wrap-card {
+    padding: 28px 20px;
+    border-radius: 20px;
+  }
+
+  /* About Us Section */
+  .about-us-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .about-us-content h2 {
+    font-size: clamp(1.85rem, 4.5vw, 2.3rem);
+  }
+  .about-pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .about-image-card {
+    aspect-ratio: 16 / 10;
+    border-radius: 18px;
+  }
+
+  /* Services / Capabilities */
+  .cargo-delivery-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .cargo-left-info {
+    grid-column: 1 / -1;
+    padding-right: 0;
+  }
+  .cargo-left-desc {
+    max-width: 100%;
+  }
+  .cargo-left-title {
+    font-size: 2.1rem;
+  }
+  .cargo-left-title span {
+    white-space: normal;
+  }
+  .air-freight-card,
+  .ocean-freight-card {
+    min-height: 280px;
+  }
+  .commodity-top-title {
+    font-size: 1.55rem;
+  }
+
+  /* Stats Banner */
+  .stats-banner-card {
+    padding: 26px 18px;
+    border-radius: 18px;
+  }
+  .stats-3col-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .center-faith-box {
+    order: -1;
+    text-align: center;
+  }
+  .faith-title {
+    font-size: clamp(1.5rem, 3.8vw, 1.95rem);
+    line-height: 1.15;
+  }
+
+  /* Why Choose Us Section */
+  .nextgen-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .nextgen-visual-wrap {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .nextgen-truck-card {
+    width: 80%;
+    border-radius: 20px;
+  }
+  .collab-badge-card {
+    width: 145px;
+    padding: 12px 10px;
+    border-radius: 14px;
+  }
+  .collab-tracker-img-wrap {
+    width: 60px;
+    height: 60px;
+  }
+  .nextgen-title {
+    font-size: clamp(1.8rem, 4vw, 2.25rem);
+  }
+  .why-choose-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  /* Products Showcase Section */
   .products-showcase-section {
-    padding: 32px 18px;
-    border-radius: var(--radius-inner);
+    padding: 30px 18px;
+    border-radius: 20px;
+  }
+  .products-showcase-title {
+    font-size: 2.1rem;
   }
   .products-header-top {
     flex-direction: column;
     align-items: flex-start;
-    gap: 18px;
+    gap: 16px;
   }
-  .products-controls-wrap {
+  .products-header-controls {
     width: 100%;
     justify-content: space-between;
   }
-  .product-filter-tabs {
-    width: 100%;
-    overflow-x: auto;
-    padding: 4px;
-    -webkit-overflow-scrolling: touch;
-    order: 2;
+  .products-slider-track {
+    gap: var(--prod-slider-gap, 20px);
   }
-  .products-carousel-arrows {
-    order: 1;
-    margin-left: auto;
+  .product-slide-card {
+    width: var(--prod-card-width, calc((100cqw - 20px) / 2));
+    flex: 0 0 var(--prod-card-width, calc((100cqw - 20px) / 2));
+  }
+
+  /* Precision Handling Section */
+  .precision-section-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .precision-truck-anchor {
+    display: none;
+  }
+  .precision-handling-card {
+    padding: 28px 18px;
+    border-radius: 20px;
+  }
+  .precision-right-col {
+    padding-top: 6px;
+    padding-bottom: 0;
+  }
+  .precision-top-info-row {
+    margin-bottom: 14px;
+  }
+  .precision-title {
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
+  }
+  .precision-slide-card {
+    width: 210px;
+    flex: 0 0 210px;
+    min-height: auto;
+    margin-top: 24px;
+    padding: 16px 14px;
+  }
+  .precision-slide-card.is-active {
+    width: 270px;
+    flex: 0 0 270px;
+    margin-top: 0;
+    padding: 18px 16px;
+  }
+  .precision-slide-card .slide-card-head {
+    margin-bottom: 8px;
+  }
+  .precision-slide-card .slide-card-num-title {
+    font-size: 0.95rem;
+    line-height: 1.25;
+  }
+  .precision-slide-card.is-active .slide-card-num-title {
+    font-size: 1.02rem;
+  }
+  .precision-slide-card .slide-card-photo-box {
+    height: 130px;
+  }
+  .precision-slide-card.is-active .slide-card-photo-box {
+    height: 140px;
+  }
+
+  /* Testimonials Section */
+  .testimonials-section-card {
+    padding: 28px 18px;
+    border-radius: 20px;
+  }
+  .testimonials-title {
+    font-size: clamp(1.75rem, 3.8vw, 2.2rem);
+  }
+  .testimonials-slider-track {
+    gap: var(--testi-slider-gap, 20px);
+  }
+  .testi-card-box {
+    width: var(--testi-card-width, calc((100cqw - 20px) / 2));
+    flex: 0 0 var(--testi-card-width, calc((100cqw - 20px) / 2));
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+  .testi-body-quote {
+    font-size: 0.96rem;
+    line-height: 1.48;
+    margin-bottom: 18px;
+  }
+  .testi-badge-tag {
+    font-size: 0.70rem;
+    padding: 4px 8px;
+    max-width: 140px;
+  }
+
+  /* Footer Card */
+  .footer-wrap-card {
+    padding: 32px 20px 26px;
+    border-radius: 20px;
+  }
+  .footer-main-row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: left;
+  }
+  .footer-brand-huge {
+    font-size: 2.8rem;
+  }
+  .footer-nav-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px 22px;
+    text-align: left;
+  }
+  .footer-nav-list a {
+    font-size: 1.45rem;
+  }
+}
+
+/* ---------------------------------------------------------
+   3. MOBILE PHONES & SMARTPHONES (520px / <= 640px)
+   --------------------------------------------------------- */
+@media (max-width: 640px) {
+  /* Hero Section */
+  .hero-fullscreen-wrapper {
+    padding: 6px 8px 12px;
+    min-height: 480px;
+    height: auto;
+  }
+  .hero-screen-card {
+    border-width: 5px;
+    border-radius: 18px;
+    min-height: 470px;
+  }
+  .hero-inner-container {
+    padding: 12px 10px 18px;
+  }
+  .brand-logo-frame {
+    height: 42px;
+    padding: 3px 12px;
+  }
+  .brand-logo-img {
+    height: 32px;
+    max-width: 130px;
+  }
+  .nav-actions-wrap {
+    gap: 0;
+  }
+  .nav-cta-btn {
+    display: none !important;
+  }
+  .nav-mobile-toggle {
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+    border-radius: 10px;
+  }
+
+  .hero-headline-wrap {
+    margin-top: 18px;
+  }
+  .hero-giant-title {
+    font-size: clamp(1.65rem, 7.8vw, 2.25rem);
+    line-height: 1.08;
+    letter-spacing: 0.01em;
+  }
+  .hero-giant-title span {
+    white-space: normal;
+    display: block;
+  }
+  .hero-headline-wrap .tag-label {
+    font-size: 0.70rem;
+    line-height: 1.35;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+  }
+  .hero-subtitle {
+    font-size: 0.84rem;
+    line-height: 1.48;
+    max-width: 100%;
+  }
+  .hero-subtitle br {
+    display: none;
+  }
+
+  /* Main Canvas Container */
+  .main-content-canvas {
+    padding: 10px 8px 36px;
+    gap: 14px;
+  }
+
+  /* Section Cards */
+  .white-section-card,
+  .blue-section-card,
+  .products-showcase-section,
+  .precision-handling-card,
+  .testimonials-section-card,
+  .footer-wrap-card {
+    padding: 20px 14px;
+    border-radius: 16px;
+  }
+
+  /* About Us Section */
+  .about-us-content h2 {
+    font-size: 1.65rem;
+    line-height: 1.12;
+  }
+  .about-us-desc {
+    font-size: 0.88rem;
+    line-height: 1.52;
+  }
+  .about-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .about-pillar-card {
+    padding: 14px 12px;
+    gap: 10px;
+    border-radius: 14px;
+  }
+  .about-image-card {
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+  }
+  .about-float-badge {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    border-radius: 10px;
+  }
+  .float-badge-top {
+    top: 10px;
+    right: 10px;
+  }
+  .float-badge-bottom {
+    bottom: 10px;
+    left: 10px;
+  }
+
+  /* Services / Capabilities */
+  .cargo-delivery-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .cargo-left-info {
+    padding-right: 0;
+  }
+  .cargo-left-title {
+    font-size: 1.65rem;
+    line-height: 1.1;
+  }
+  .cargo-left-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    max-width: 100%;
+  }
+  .cargo-left-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .cargo-card {
+    padding: 18px 14px;
+    border-radius: 16px;
+  }
+  .air-freight-card,
+  .ocean-freight-card {
+    min-height: 240px;
+    border-radius: 18px;
+  }
+  .commodity-top-title {
+    font-size: 1.45rem;
+  }
+  .commodity-bottom-pill {
+    padding: 8px 18px;
+    font-size: 0.80rem;
+  }
+  .commodity-badge-overlay {
+    padding: 22px 16px 20px;
+  }
+
+  /* Stats Banner */
+  .stats-banner-card {
+    padding: 18px 12px;
+    border-radius: 14px;
+  }
+  .faith-title {
+    font-size: 1.35rem;
+    line-height: 1.18;
+  }
+  .center-faith-box br {
+    display: none;
+  }
+  .agent-support-box {
+    padding: 16px 12px;
+    border-radius: 14px;
+  }
+  .agent-name {
+    font-size: 0.95rem;
+  }
+  .agent-title {
+    font-size: 0.78rem;
+  }
+  .agent-call-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.80rem;
+    padding: 10px 12px;
+  }
+  .booking-stats-box {
+    padding: 16px 12px;
+    border-radius: 14px;
+  }
+  .booking-header-title {
+    font-size: 0.84rem;
+  }
+  .booking-item-name {
+    font-size: 0.80rem;
+  }
+  .booking-item-sub {
+    font-size: 0.72rem;
+  }
+
+  /* Why Choose Us Section */
+  .nextgen-title {
+    font-size: 1.6rem;
+    line-height: 1.12;
+  }
+  .nextgen-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .nextgen-visual-wrap {
+    max-width: 100%;
+    position: relative;
+    margin: 0 auto;
+    min-height: 240px;
+  }
+  .nextgen-truck-card {
+    width: 82%;
+    aspect-ratio: 16 / 11;
+    border-radius: 16px;
+  }
+  .pinpoint-badge {
+    padding: 8px 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+  .pinpoint-title {
+    font-size: 0.78rem;
+  }
+  .pinpoint-sub {
+    font-size: 0.68rem;
+  }
+  .collab-badge-card {
+    width: 125px;
+    padding: 10px 8px 10px;
+    border-radius: 12px;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .collab-badge-label {
+    font-size: 0.70rem;
+  }
+  .collab-tracker-img-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+  }
+  .collab-tagline {
+    font-size: 0.68rem;
+    line-height: 1.25;
+  }
+  .nextgen-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .nextgen-actions .btn-yellow {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.82rem;
+  }
+  .watch-demo-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.88rem;
+  }
+  .why-choose-features-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .why-feature-card {
+    padding: 12px 10px;
+    border-radius: 12px;
+  }
+  .why-feature-title {
+    font-size: 0.90rem;
+  }
+  .why-feature-desc {
+    font-size: 0.78rem;
+  }
+
+  /* Products Showcase Section */
+  .products-showcase-section {
+    padding: 22px 12px;
+    border-radius: 16px;
+  }
+  .products-showcase-title {
+    font-size: 1.65rem;
+    line-height: 1.1;
+  }
+  .products-showcase-sub {
+    font-size: 0.84rem;
+    line-height: 1.48;
+  }
+  .products-header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .products-header-controls {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .products-verified-badge {
+    font-size: 0.74rem;
+    padding: 5px 10px;
   }
   .filter-tab-btn {
-    padding: 7px 14px;
-    font-size: 0.8rem;
+    padding: 6px 14px;
+    font-size: 0.78rem;
   }
   .products-slider-track {
     gap: var(--prod-slider-gap, 16px);
   }
   .product-slide-card {
-    width: var(--prod-card-width, calc(100cqw - 24px));
-    flex: 0 0 var(--prod-card-width, calc(100cqw - 24px));
+    width: var(--prod-card-width, calc(100cqw - 8px));
+    flex: 0 0 var(--prod-card-width, calc(100cqw - 8px));
   }
-  .products-bottom-bar {
-    padding: 20px 18px;
-    flex-direction: column;
-    align-items: flex-start;
+  .product-slide-thumb {
+    height: 190px;
+    max-height: 190px;
   }
-  .products-bottom-actions {
-    width: 100%;
-    flex-direction: column;
+  .product-slide-body {
+    padding: 16px 14px;
   }
-  .btn-spec-inquire,
-  .btn-spec-whatsapp {
+  .product-slide-title {
+    font-size: 1.15rem;
+  }
+  .product-slide-desc {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  .product-specs-card {
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
+  .spec-row {
+    font-size: 0.78rem;
+  }
+  .product-slide-cta {
+    padding: 10px 14px;
+    font-size: 0.84rem;
+  }
+
+  /* Precision Handling Section */
+  .precision-handling-card {
+    padding: 22px 12px;
+    border-radius: 16px;
+  }
+  .precision-title {
+    font-size: 1.6rem;
+    line-height: 1.12;
+  }
+  .precision-desc {
+    font-size: 0.84rem;
+    line-height: 1.48;
+  }
+  .precision-btn {
     width: 100%;
     justify-content: center;
   }
+  .precision-slide-card {
+    width: 195px;
+    flex: 0 0 195px;
+    min-height: auto;
+    padding: 14px 12px;
+    border-radius: 16px;
+    margin-top: 18px;
+  }
+  .precision-slide-card.is-active {
+    width: 250px;
+    flex: 0 0 250px;
+    margin-top: 0;
+    padding: 16px 14px;
+  }
+  .precision-slide-card .slide-card-num-title {
+    font-size: 0.88rem;
+    line-height: 1.25;
+  }
+  .precision-slide-card.is-active .slide-card-num-title {
+    font-size: 0.95rem;
+  }
+  .precision-slide-card .slide-card-photo-box {
+    height: 115px;
+  }
+  .precision-slide-card.is-active .slide-card-photo-box {
+    height: 125px;
+  }
+  .precision-slider-bottom-bar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .precision-step-dots {
+    gap: 6px;
+  }
+  .step-dot {
+    width: 18px;
+    height: 5px;
+  }
+  .step-dot.active {
+    width: 30px;
+  }
+
+  /* Testimonials Section */
+  .testimonials-section-card {
+    padding: 22px 14px;
+    border-radius: 16px;
+  }
+  .testimonials-title {
+    font-size: 1.65rem;
+  }
+  .testimonials-slider-track {
+    gap: var(--testi-slider-gap, 16px);
+  }
+  .testi-card-box {
+    width: var(--testi-card-width, 100cqw);
+    flex: 0 0 var(--testi-card-width, 100cqw);
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+  .testi-body-quote {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .testi-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 14px;
+  }
+  .testi-avatar-img {
+    width: 40px;
+    height: 40px;
+  }
+  .testi-author-name {
+    font-size: 0.90rem;
+  }
+  .testi-author-role {
+    font-size: 0.74rem;
+  }
+  .testi-badge-tag {
+    font-size: 0.72rem;
+    padding: 4px 8px;
+    text-align: left;
+    max-width: 100%;
+    align-self: flex-start;
+  }
+
+  /* Modals on Mobile */
   .inquiry-modal-dialog {
-    padding: 24px 20px;
+    padding: 22px 16px;
+    border-radius: 20px;
+    max-width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
   }
   .inquiry-2col {
     grid-template-columns: 1fr;
     gap: 12px;
   }
-  .newsletter-inputs-row {
+  .video-modal-dialog {
+    width: 95%;
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  /* Footer Card */
+  .footer-wrap-card {
+    padding: 26px 14px 22px;
+    border-radius: 16px;
+  }
+  .footer-main-row {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    text-align: left;
+    padding-top: 24px;
+  }
+  .footer-logo-badge {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    padding: 4px;
+  }
+  .footer-brand-huge {
+    font-size: 2.2rem;
+  }
+  .footer-brand-sub {
+    font-size: 0.70rem;
+  }
+  .footer-brand-desc {
+    font-size: 0.80rem;
+    line-height: 1.5;
+  }
+  .footer-contact-block h5 {
+    font-size: 0.88rem;
+    margin-bottom: 10px;
+  }
+  .footer-contact-block p {
+    font-size: 0.82rem;
+    margin-bottom: 8px;
+  }
+  .footer-nav-list {
     flex-direction: column;
-    width: 100%;
-    gap: 12px;
+    gap: 8px;
+    text-align: left;
   }
-  .cargo-left-title span {
-    white-space: normal;
+  .footer-nav-list a {
+    font-size: 1.25rem;
   }
-  .newsletter-input,
-  .newsletter-submit-btn {
-    width: 100%;
-    justify-content: center;
+  .footer-wrap-card div[style*="border-top"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    font-size: 0.74rem !important;
+    text-align: left !important;
+    margin-top: 24px !important;
+    padding-top: 16px !important;
   }
 }
 
+/* ---------------------------------------------------------
+   4. ULTRA-COMPACT MOBILE PHONES (<= 380px)
+   --------------------------------------------------------- */
+@media (max-width: 380px) {
+  .hero-fullscreen-wrapper {
+    padding: 4px 6px 10px;
+  }
+  .hero-screen-card {
+    border-width: 4px;
+    border-radius: 14px;
+  }
+  .hero-inner-container {
+    padding: 10px 8px 16px;
+  }
+  .brand-logo-frame {
+    height: 38px;
+    padding: 2px 10px;
+  }
+  .brand-logo-img {
+    height: 28px;
+    max-width: 110px;
+  }
+  .nav-cta-btn {
+    display: none !important;
+  }
+  .hero-giant-title {
+    font-size: 1.55rem;
+  }
+  .main-content-canvas {
+    padding: 8px 6px 30px;
+    gap: 12px;
+  }
+  .white-section-card,
+  .blue-section-card,
+  .products-showcase-section,
+  .precision-handling-card,
+  .testimonials-section-card,
+  .footer-wrap-card {
+    padding: 18px 10px;
+    border-radius: 14px;
+  }
+  .testi-card-box {
+    width: var(--testi-card-width, 100%);
+    flex: 0 0 var(--testi-card-width, 100%);
+    padding: 16px 12px;
+  }
+}
